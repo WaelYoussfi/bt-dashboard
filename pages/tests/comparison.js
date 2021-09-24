@@ -1,4 +1,4 @@
-const Comparaison = () => {
+const Comparison = () => {
     return (
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto
@@ -9,4 +9,4 @@ const Comparaison = () => {
     );
 };
 
-export default Comparaison;
+export default Comparison;
