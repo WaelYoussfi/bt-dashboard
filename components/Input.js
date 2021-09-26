@@ -1,7 +1,16 @@
+import ImageCard from "./cards/ImageCard";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
-import { Button, Snackbar, IconButton, Grid } from "@mui/material";
+import {
+    Button,
+    Snackbar,
+    IconButton,
+    Grid,
+    Switch,
+    FormGroup,
+    FormControlLabel,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import { Fragment, useState } from "react";
 
@@ -15,6 +24,7 @@ const ImageInput = () => {
     const [message, setMessage] = useState(
         "Veuillez télécharger un fichier de type image"
     );
+    const [checked, setChecked] = useState(false);
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -22,6 +32,9 @@ const ImageInput = () => {
         }
 
         setOpen(false);
+    };
+    const handleSwitch = (event) => {
+        setChecked(event.target.checked);
     };
     //action of the snackbar
     const action = (
@@ -46,6 +59,13 @@ const ImageInput = () => {
             setOpen(true);
         }
         setFile(f);
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setFile(reader.result);
+            }
+        };
+        reader.readAsDataURL(f);
     };
     const handleSend = (event) => {
         //send the image
@@ -71,6 +91,18 @@ const ImageInput = () => {
                         X-RAY
                     </Button>
                 </label>
+                <FormGroup>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={checked}
+                                onChange={handleSwitch}
+                                inputProps={{ "aria-label": "controlled" }}
+                            />
+                        }
+                        label="Augmentation"
+                    />
+                </FormGroup>
             </Grid>
             <Grid item xs={2}>
                 <label htmlFor="send-btn">
@@ -85,8 +117,12 @@ const ImageInput = () => {
                     </Button>
                 </label>
             </Grid>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
+                <ImageCard img={"/images/xray.jpeg"} />
+            </Grid>
+            <Grid item xs={4}>
+                <ImageCard img={"/images/segmented.png"} />
+            </Grid>
             <Snackbar
                 open={open}
                 autoHideDuration={6000}

@@ -1,14 +1,14 @@
 import { Card, CardMedia } from "@mui/material";
 
-const ImageCard = (img) => {
-    console.log(img);
+const ImageCard = (props) => {
+    console.log(props);
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ minWidth: 345 }}>
             <CardMedia
                 component="img"
-                height="140"
-                image={img.img}
-                alt="Image Segmenté"
+                height="200"
+                image={props.img}
+                alt="Choisir une image"
             />
         </Card>
     );

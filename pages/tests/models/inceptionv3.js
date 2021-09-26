@@ -1,14 +1,19 @@
+import { Grid } from "@mui/material";
 import InfoCard from "../../../components/cards/InfoCard";
 import ImageInput from "../../../components/Input";
 
 const Inceptionv3 = () => {
-    const rslt = "Négatif";
+    const rslt = "Positif";
     const acrcy = "98%";
     return (
-        <>
-            <ImageInput />
-            <InfoCard result={rslt} accuracy={acrcy} />
-        </>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ImageInput />
+            </Grid>
+            <Grid item xs={12}>
+                <InfoCard result={rslt} accuracy={acrcy} />
+            </Grid>
+        </Grid>
     );
 };
 
