@@ -1,7 +1,7 @@
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
-import { Button, Stack, Snackbar, IconButton } from "@mui/material";
+import { Button, Snackbar, IconButton, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import { Fragment, useState } from "react";
 
@@ -54,33 +54,39 @@ const ImageInput = () => {
         setOpen(true);
     };
     return (
-        <Stack direction="row" alignItems="center" spacing={4}>
-            <label htmlFor="icon-btn">
-                <Input
-                    accept="image/*"
-                    id="icon-btn"
-                    type="file"
-                    onChange={handleFile}
-                />
-                <Button
-                    variant="outlined"
-                    startIcon={<PhotoCamera />}
-                    component="span"
-                >
-                    X-RAY
-                </Button>
-            </label>
-            <label htmlFor="send-btn">
-                <Button
-                    variant="contained"
-                    endIcon={<SendIcon />}
-                    onClick={(event) => {
-                        handleSend(event);
-                    }}
-                >
-                    Envoyer
-                </Button>
-            </label>
+        <Grid container spacing={2}>
+            <Grid item xs={2}>
+                <label htmlFor="icon-btn">
+                    <Input
+                        accept="image/*"
+                        id="icon-btn"
+                        type="file"
+                        onChange={handleFile}
+                    />
+                    <Button
+                        variant="outlined"
+                        startIcon={<PhotoCamera />}
+                        component="span"
+                    >
+                        X-RAY
+                    </Button>
+                </label>
+            </Grid>
+            <Grid item xs={2}>
+                <label htmlFor="send-btn">
+                    <Button
+                        variant="contained"
+                        endIcon={<SendIcon />}
+                        onClick={(event) => {
+                            handleSend(event);
+                        }}
+                    >
+                        Envoyer
+                    </Button>
+                </label>
+            </Grid>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}></Grid>
             <Snackbar
                 open={open}
                 autoHideDuration={6000}
@@ -88,7 +94,7 @@ const ImageInput = () => {
                 message={message}
                 action={action}
             />
-        </Stack>
+        </Grid>
     );
 };
 
