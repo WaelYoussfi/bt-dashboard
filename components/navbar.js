@@ -8,6 +8,7 @@ import {
     ListItemText,
     Toolbar,
     ListItemIcon,
+    Button,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import CompareIcon from "@mui/icons-material/Compare";
@@ -20,6 +21,15 @@ const Navbar = () => {
     const [item, setItem] = useState("Accueil");
     const handleItemClick = (e, text) => {
         setItem(text);
+    };
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     return (
@@ -123,6 +133,18 @@ const Navbar = () => {
                         </ListItem>
                     </Link>
                 </List>
+                <Divider />
+                <Button
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                    }}
+                >
+                    Classification
+                </Button>
             </Box>
         </Drawer>
     );

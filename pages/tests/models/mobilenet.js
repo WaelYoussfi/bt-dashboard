@@ -1,5 +1,5 @@
-import InfoCard from "../../../components/cards/InfoCard";
-import ImageInput from "../../../components/Input";
+import InfoCard from "../../../components/cards/infoCard";
+import ImageInput from "../../../components/input";
 
 const Mobilenet = () => {
     const rslt = "Négatif";

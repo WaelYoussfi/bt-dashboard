@@ -3,8 +3,8 @@ import InfoCard from "../../../components/cards/InfoCard";
 import ImageInput from "../../../components/Input";
 
 const Inceptionv3 = () => {
-    const rslt = "Positif";
-    const acrcy = "98%";
+    const rslt = "";
+    const acrcy = "";
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>

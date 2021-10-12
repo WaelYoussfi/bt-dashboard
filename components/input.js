@@ -1,4 +1,4 @@
-import ImageCard from "./cards/ImageCard";
+import ImageCard from "./cards/imageCard";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
@@ -118,10 +118,10 @@ const ImageInput = () => {
                 </label>
             </Grid>
             <Grid item xs={4}>
-                <ImageCard img={"/images/xray.jpeg"} />
+                <ImageCard img={file} />
             </Grid>
             <Grid item xs={4}>
-                <ImageCard img={"/images/segmented.png"} />
+                <ImageCard img={file} />
             </Grid>
             <Snackbar
                 open={open}
