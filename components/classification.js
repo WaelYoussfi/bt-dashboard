@@ -1,5 +1,5 @@
 const Classification = () => {
-    return <></>;
+    return <>class</>;
 };
 
 export default Classification;
