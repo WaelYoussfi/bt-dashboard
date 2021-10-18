@@ -16,15 +16,16 @@ import CompareIcon from "@mui/icons-material/Compare";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import { useState } from "react";
+import { useRouter } from "next/dist/client/router";
 const drawerWidth = 240;
 
 const Navbar = () => {
+    const ro = useRouter();
     const sansAug = "Classification sans augmentation";
     const avecAug = "Classification avec augmentation";
     const [label, setlabel] = useState("Classification sans mask");
-    const [item, setItem] = useState("Accueil");
-    const handleItemClick = (e, text) => {
-        setItem(text);
+
+    const handleItemClick = () => {
         setlabel("Classification sans mask");
     };
 
@@ -59,10 +60,8 @@ const Navbar = () => {
                     <Link href="/">
                         <ListItem
                             button
-                            selected={item === "Accueil"}
-                            onClick={(event) =>
-                                handleItemClick(event, "Accueil")
-                            }
+                            selected={ro.pathname === "/"}
+                            onClick={(event) => handleItemClick()}
                         >
                             <ListItemIcon>
                                 <HomeIcon />
@@ -76,10 +75,8 @@ const Navbar = () => {
                     <Link href="/segmentations">
                         <ListItem
                             button
-                            selected={item === "Segmentation"}
-                            onClick={(event) =>
-                                handleItemClick(event, "Segmentation")
-                            }
+                            selected={ro.pathname === "/segmentations"}
+                            onClick={(event) => handleItemClick()}
                         >
                             <ListItemIcon>
                                 <ImageSearchIcon />
@@ -93,13 +90,10 @@ const Navbar = () => {
                     <Link href="/classification/avecMask">
                         <ListItem
                             button
-                            selected={item === "Classification avec mask"}
-                            onClick={(event) =>
-                                handleItemClick(
-                                    event,
-                                    "Classification avec mask"
-                                )
+                            selected={
+                                ro.pathname === "/classification/avecMask"
                             }
+                            onClick={() => handleItemClick()}
                         >
                             <ListItemIcon>
                                 <DocumentScannerIcon />
@@ -112,12 +106,15 @@ const Navbar = () => {
                 <List>
                     <ListItem
                         button
-                        selected={item === "Classification"}
+                        selected={
+                            ro.pathname === "/classification/sansAug" ||
+                            ro.pathname === "/classification/avecAug"
+                        }
                         aria-controls="basic-menu"
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                         onClick={(event) => {
-                            handleItemClick(event, "Classification");
+                            handleItemClick();
                             handleClick(event);
                         }}
                     >
@@ -146,13 +143,11 @@ const Navbar = () => {
                 </List>
                 <Divider />
                 <List>
-                    <Link href="/">
+                    <Link href="/comparaison">
                         <ListItem
                             button
-                            selected={item === "Comparaison"}
-                            onClick={(event) =>
-                                handleItemClick(event, "Comparaison")
-                            }
+                            selected={ro.pathname === "/comparaison"}
+                            onClick={(event) => handleItemClick()}
                         >
                             <ListItemIcon>
                                 <CompareIcon />

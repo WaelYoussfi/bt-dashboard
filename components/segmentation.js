@@ -1,5 +1,4 @@
-import { Button } from "@mui/material";
-import InfoCard from "./cards/infoCard";
+import { Button, Grid } from "@mui/material";
 import ImageInput from "./input";
 
 const Segmentation = (props) => {
@@ -8,18 +7,23 @@ const Segmentation = (props) => {
     }
     return (
         <>
-            <ImageInput />
-            <InfoCard />
-            <Button
-                variant="contained"
-                color="error"
-                onClick={() => {
-                    props.setModel(null);
-                    props.setLabel("choisir modele");
-                }}
-            >
-                réinitialisation
-            </Button>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <ImageInput />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => {
+                            props.setModel(null);
+                            props.setLabel("choisir segmentation");
+                        }}
+                    >
+                        réinitialisation
+                    </Button>
+                </Grid>
+            </Grid>
         </>
     );
 };

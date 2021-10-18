@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const Segmentations = () => {
     const [model, setModel] = useState(null);
-    const [label, setLabel] = useState("Choisir modele");
+    const [label, setLabel] = useState("Choisir segmentation");
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -22,30 +22,41 @@ const Segmentations = () => {
     };
     return (
         <>
-            <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ textAlign: "center" }}
-            >
-                Classification avec mask
-            </Typography>
-            <Button variant="contained" onClick={handleClick}>
-                {label}
-            </Button>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{ textAlign: "center" }}
+                    >
+                        Segmentations
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button variant="contained" onClick={handleClick}>
+                        {label}
+                    </Button>
 
-            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                {segs.map((item) => (
-                    <MenuItem key={item} onClick={() => handleClose(item)}>
-                        {item}
-                    </MenuItem>
-                ))}
-            </Menu>
-            <Segmentation
-                model={model}
-                setModel={setModel}
-                setLabel={setLabel}
-            />
+                    <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                        {segs.map((item) => (
+                            <MenuItem
+                                key={item}
+                                onClick={() => handleClose(item)}
+                            >
+                                {item}
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                </Grid>
+                <Grid item xs={12}>
+                    <Segmentation
+                        model={model}
+                        setModel={setModel}
+                        setLabel={setLabel}
+                    />
+                </Grid>
+            </Grid>
         </>
     );
 };
