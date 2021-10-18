@@ -8,8 +8,11 @@ import {
 } from "@mui/material";
 
 const InfoCard = (props) => {
+    if (props.accuracy === null && props.result === null) {
+        return null;
+    }
     return (
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
             <Grid item xs={6}>
                 <Card sx={{ minWidth: 275, textAlign: "center" }}>
                     <CardContent>
@@ -24,9 +27,9 @@ const InfoCard = (props) => {
                             {props.result}
                         </Typography>
                     </CardContent>
-                    <CardActions>
+                    {/* <CardActions>
                         <Button size="small">Savoir Plus</Button>
-                    </CardActions>
+                    </CardActions> */}
                 </Card>
             </Grid>
             <Grid item xs={6}>
@@ -43,9 +46,9 @@ const InfoCard = (props) => {
                             {props.accuracy}
                         </Typography>
                     </CardContent>
-                    <CardActions>
+                    {/* <CardActions>
                         <Button size="small">Savoir Plus</Button>
-                    </CardActions>
+                    </CardActions> */}
                 </Card>
             </Grid>
         </Grid>

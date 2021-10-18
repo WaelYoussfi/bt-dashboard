@@ -2,29 +2,24 @@ import ImageCard from "./cards/imageCard";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
-import {
-    Button,
-    Snackbar,
-    IconButton,
-    Grid,
-    Switch,
-    FormGroup,
-    FormControlLabel,
-} from "@mui/material";
+import { Button, Snackbar, IconButton, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import { Fragment, useState } from "react";
+import InfoCard from "./cards/infoCard";
 
 const Input = styled("input")({
     display: "none",
 });
 
-const ImageInput = () => {
+const ImageInput = (props) => {
     const [file, setFile] = useState(null);
+    const [imgSeg, setImgSeg] = useState(null);
+    const [accuracy, setAccuracy] = useState(null);
+    const [result, setResult] = useState(null);
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState(
         "Veuillez télécharger un fichier de type image"
     );
-    const [checked, setChecked] = useState(false);
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -33,15 +28,10 @@ const ImageInput = () => {
 
         setOpen(false);
     };
-    const handleSwitch = (event) => {
-        setChecked(event.target.checked);
-    };
+
     //action of the snackbar
     const action = (
         <Fragment>
-            <Button color="secondary" size="small" onClick={handleClose}>
-                UNDO
-            </Button>
             <IconButton
                 size="small"
                 aria-label="close"
@@ -67,11 +57,28 @@ const ImageInput = () => {
         };
         reader.readAsDataURL(f);
     };
-    const handleSend = (event) => {
+    const handleSend = () => {
         //send the image
-        console.log(file);
+        //console.log(file);
+        fetch(
+            "http://c73b-154-111-84-246.ngrok.io/mask_classification/resnet50/no16.jpg?fbclid=IwAR0CuOQA31TCFQZNcdr1xjBk2hvi8nQ_vpaD0fHgCHuyQ-Q4bgUZiAI_-wc"
+        )
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setResult(data.test);
+                setAccuracy(data.accuracy);
+            });
+
         setMessage("Votre X-ray a été envoyé avec succès!");
         setOpen(true);
+        //console.log(response);
+
+        if (!imgSeg) {
+            setImgSeg(false);
+        }
     };
     return (
         <Grid container spacing={2}>
@@ -91,22 +98,11 @@ const ImageInput = () => {
                         X-RAY
                     </Button>
                 </label>
-                <FormGroup>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={checked}
-                                onChange={handleSwitch}
-                                inputProps={{ "aria-label": "controlled" }}
-                            />
-                        }
-                        label="Augmentation"
-                    />
-                </FormGroup>
             </Grid>
             <Grid item xs={2}>
                 <label htmlFor="send-btn">
                     <Button
+                        color="success"
                         variant="contained"
                         endIcon={<SendIcon />}
                         onClick={(event) => {
@@ -118,10 +114,14 @@ const ImageInput = () => {
                 </label>
             </Grid>
             <Grid item xs={4}>
-                <ImageCard img={file} />
+                <ImageCard img={file} height={250} />
             </Grid>
+
             <Grid item xs={4}>
-                <ImageCard img={file} />
+                {imgSeg && <ImageCard img={file} height={250} />}
+            </Grid>
+            <Grid item xs={12}>
+                <InfoCard accuracy={accuracy} result={result} />
             </Grid>
             <Snackbar
                 open={open}
