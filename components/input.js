@@ -6,7 +6,6 @@ import { Button, Snackbar, IconButton, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import { Fragment, useState } from "react";
 import InfoCard from "./cards/infoCard";
-import axios from "axios";
 
 const Input = styled("input")({
     display: "none",
