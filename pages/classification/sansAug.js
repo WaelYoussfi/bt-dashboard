@@ -19,7 +19,16 @@ const SansAugmentation = () => {
         setLabel(item);
         setModel(item);
     };
-
+    const props = {
+        url: {
+            typeModel: "no_mask_classification/",
+            aug: "no_augmentation",
+            model: model,
+        },
+        model: model,
+        setModel: setModel,
+        setLabel: setLabel,
+    };
     return (
         <>
             <Grid container spacing={2}>
@@ -50,11 +59,7 @@ const SansAugmentation = () => {
                     </Menu>
                 </Grid>
                 <Grid item xs={12}>
-                    <Classification
-                        model={model}
-                        setModel={setModel}
-                        setLabel={setLabel}
-                    />
+                    <Classification {...props} />
                 </Grid>
             </Grid>
         </>

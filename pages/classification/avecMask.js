@@ -20,7 +20,16 @@ const AvecMask = () => {
         setLabel(item);
         setModel(item);
     };
-
+    const props = {
+        url: {
+            typeModel: "mask_classification/",
+            aug: "",
+            model: model,
+        },
+        model: model,
+        setModel: setModel,
+        setLabel: setLabel,
+    };
     return (
         <>
             <Grid container spacing={2}>
@@ -52,11 +61,7 @@ const AvecMask = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Classification
-                        model={model}
-                        setModel={setModel}
-                        setLabel={setLabel}
-                    />
+                    <Classification {...props} />
                 </Grid>
             </Grid>
         </>

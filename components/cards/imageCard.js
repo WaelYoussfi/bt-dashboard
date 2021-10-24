@@ -1,6 +1,7 @@
 import { Card, CardMedia } from "@mui/material";
 
 const ImageCard = (props) => {
+    // console.log(props.img);
     if (props.img === null) return null;
     return (
         <Card sx={{ minWidth: 345 }}>

@@ -6,12 +6,14 @@ import { Button, Snackbar, IconButton, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import { Fragment, useState } from "react";
 import InfoCard from "./cards/infoCard";
+import axios from "axios";
 
 const Input = styled("input")({
     display: "none",
 });
 
 const ImageInput = (props) => {
+    const [image, setImage] = useState(null);
     const [file, setFile] = useState(null);
     const [imgSeg, setImgSeg] = useState(null);
     const [accuracy, setAccuracy] = useState(null);
@@ -21,6 +23,13 @@ const ImageInput = (props) => {
         "Veuillez télécharger un fichier de type image"
     );
 
+    const url =
+        "http://d860-34-70-79-241.ngrok.io/" +
+        props.typeModel +
+        props.aug +
+        props.model;
+
+    // console.log(url);
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
@@ -48,33 +57,44 @@ const ImageInput = (props) => {
         if (f.type.substr(0, 5) !== "image") {
             setOpen(true);
         }
-        setFile(f);
+        setImage(f);
         const reader = new FileReader();
         reader.onload = () => {
             if (reader.readyState === 2) {
                 setFile(reader.result);
+                console.log(file);
+                console.log(image);
             }
         };
         reader.readAsDataURL(f);
     };
     const handleSend = () => {
         //send the image
-        //console.log(file);
-        fetch(
-            "http://c73b-154-111-84-246.ngrok.io/mask_classification/resnet50/no16.jpg?fbclid=IwAR0CuOQA31TCFQZNcdr1xjBk2hvi8nQ_vpaD0fHgCHuyQ-Q4bgUZiAI_-wc"
-        )
-            .then((res) => {
-                return res.json();
+
+        if (file === null) {
+            setMessage("Choisir une image svp");
+            setOpen(true);
+            return 0;
+        }
+
+        let formdata = new FormData();
+        formdata.append("image", image);
+
+        fetch(url, {
+            method: "POST",
+            body: formdata,
+        })
+            .then(function (response) {
+                return response.json();
             })
-            .then((data) => {
-                console.log(data);
-                setResult(data.test);
+            .then(function (data) {
                 setAccuracy(data.accuracy);
-            });
+                setResult(data.test);
+            })
+            .catch((e) => console.log(e));
 
         setMessage("Votre X-ray a été envoyé avec succès!");
         setOpen(true);
-        //console.log(response);
 
         if (!imgSeg) {
             setImgSeg(false);
@@ -118,14 +138,14 @@ const ImageInput = (props) => {
             </Grid>
 
             <Grid item xs={4}>
-                {imgSeg && <ImageCard img={file} height={250} />}
+                {imgSeg && <ImageCard img={imgSeg} height={250} />}
             </Grid>
             <Grid item xs={12}>
                 <InfoCard accuracy={accuracy} result={result} />
             </Grid>
             <Snackbar
                 open={open}
-                autoHideDuration={6000}
+                autoHideDuration={5000}
                 onClose={handleClose}
                 message={message}
                 action={action}
