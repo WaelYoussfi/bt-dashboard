@@ -9,7 +9,7 @@ const Segmentation = (props) => {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <ImageInput />
+                    <ImageInput {...props.url} />
                 </Grid>
                 <Grid item xs={12}>
                     <Button

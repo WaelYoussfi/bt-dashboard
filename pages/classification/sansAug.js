@@ -22,7 +22,7 @@ const SansAugmentation = () => {
     const props = {
         url: {
             typeModel: "no_mask_classification/",
-            aug: "no_augmentation",
+            aug: "no_augmentation/",
             model: model,
         },
         model: model,

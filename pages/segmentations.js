@@ -20,6 +20,16 @@ const Segmentations = () => {
         setLabel(item);
         setModel(item);
     };
+    const props = {
+        url: {
+            typeModel: "segmentation/",
+            aug: "",
+            model: model,
+        },
+        model: model,
+        setModel: setModel,
+        setLabel: setLabel,
+    };
     return (
         <>
             <Grid container spacing={2}>
@@ -50,11 +60,7 @@ const Segmentations = () => {
                     </Menu>
                 </Grid>
                 <Grid item xs={12}>
-                    <Segmentation
-                        model={model}
-                        setModel={setModel}
-                        setLabel={setLabel}
-                    />
+                    <Segmentation {...props} />
                 </Grid>
             </Grid>
         </>

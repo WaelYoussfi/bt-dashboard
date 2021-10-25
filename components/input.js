@@ -5,11 +5,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button, Snackbar, IconButton, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import { Fragment, useState } from "react";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 import InfoCard from "./cards/infoCard";
+import app from "../public/firebaseConfig";
 
 const Input = styled("input")({
     display: "none",
 });
+
+const storage = getStorage(app);
 
 const ImageInput = (props) => {
     const [image, setImage] = useState(null);
@@ -23,12 +28,12 @@ const ImageInput = (props) => {
     );
 
     const url =
-        "http://d860-34-70-79-241.ngrok.io/" +
+        "http://0799-34-125-108-173.ngrok.io/" +
         props.typeModel +
         props.aug +
         props.model;
 
-    // console.log(url);
+    console.log(url);
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
@@ -54,6 +59,7 @@ const ImageInput = (props) => {
         //check the type of file and preview if image
         const f = e.target.files[0];
         if (f.type.substr(0, 5) !== "image") {
+            setMessage("Veuillez télécharger un fichier de type image");
             setOpen(true);
         }
         setImage(f);
@@ -87,8 +93,14 @@ const ImageInput = (props) => {
                 return response.json();
             })
             .then(function (data) {
-                setAccuracy(data.accuracy);
+                console.log(data);
+                const pathReference = ref(storage, data.image_path);
+                getDownloadURL(pathReference)
+                    .then((url) => setImgSeg(url))
+                    .catch((e) => console.log(e));
                 setResult(data.test);
+                setAccuracy(data.accuracy);
+                console.log(accuracy);
             })
             .catch((e) => console.log(e));
 
@@ -97,6 +109,9 @@ const ImageInput = (props) => {
 
         if (!imgSeg) {
             setImgSeg(false);
+        }
+        if (accuracy === undefined) {
+            setAccuracy(false);
         }
     };
     return (
