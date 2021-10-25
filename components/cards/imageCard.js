@@ -7,7 +7,7 @@ const ImageCard = (props) => {
         <Card sx={{ minWidth: 345 }}>
             <CardMedia
                 component="img"
-                height={props.height}
+                // height={props.height}
                 image={props.img}
                 alt="Choisir une image"
             />

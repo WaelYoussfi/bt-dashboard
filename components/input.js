@@ -26,12 +26,15 @@ const ImageInput = (props) => {
     const [message, setMessage] = useState(
         "Veuillez télécharger un fichier de type image"
     );
-
-    const url =
-        "http://0799-34-125-108-173.ngrok.io/" +
-        props.typeModel +
-        props.aug +
-        props.model;
+    let url;
+    if (props.model === "maskrcnn") {
+        url = "http://1a3e-35-245-97-193.ngrok.io/segmentation/maskrcnn";
+    } else
+        url =
+            "http://e6bf-35-186-160-248.ngrok.io/" +
+            props.typeModel +
+            props.aug +
+            props.model;
 
     console.log(url);
     const handleClose = (event, reason) => {
@@ -100,7 +103,6 @@ const ImageInput = (props) => {
                     .catch((e) => console.log(e));
                 setResult(data.test);
                 setAccuracy(data.accuracy);
-                console.log(accuracy);
             })
             .catch((e) => console.log(e));
 
@@ -148,11 +150,11 @@ const ImageInput = (props) => {
                 </label>
             </Grid>
             <Grid item xs={4}>
-                <ImageCard img={file} height={250} />
+                <ImageCard img={file} />
             </Grid>
 
             <Grid item xs={4}>
-                {imgSeg && <ImageCard img={imgSeg} height={250} />}
+                {imgSeg && <ImageCard img={imgSeg} />}
             </Grid>
             <Grid item xs={12}>
                 <InfoCard accuracy={accuracy} result={result} />

@@ -5,4 +5,4 @@ export const models = [
     "VGG16",
     "VGG19",
 ];
-export const segs = ["MaskR-CNN", "unet"];
+export const segs = ["maskrcnn", "unet"];
