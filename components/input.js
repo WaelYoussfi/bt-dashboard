@@ -80,6 +80,7 @@ const ImageInput = (props) => {
         reader.readAsDataURL(f);
         setAccuracy(null);
         setResult(null);
+        setImgSeg(null);
     };
     const handleSend = () => {
         //send the image
