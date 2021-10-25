@@ -7,7 +7,7 @@ const ImageCard = (props) => {
             <CardMedia
                 sx={{ objectFit: "fill" }}
                 component="img"
-                height={250}
+                height={300}
                 image={props.img}
                 alt="Choisir une image"
             />

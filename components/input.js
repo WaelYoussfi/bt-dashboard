@@ -28,10 +28,10 @@ const ImageInput = (props) => {
     );
     let url;
     if (props.model === "maskrcnn") {
-        url = "http://1a3e-35-245-97-193.ngrok.io/segmentation/maskrcnn";
+        url = "http://f4c5-35-245-97-193.ngrok.io/segmentation/maskrcnn";
     } else
         url =
-            "http://e6bf-35-186-160-248.ngrok.io/" +
+            "http://2ed7-35-186-160-248.ngrok.io/" +
             props.typeModel +
             props.aug +
             props.model;
