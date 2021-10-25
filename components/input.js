@@ -60,11 +60,14 @@ const ImageInput = (props) => {
     );
     const handleFile = (e) => {
         //check the type of file and preview if image
+
         const f = e.target.files[0];
         if (f.type.substr(0, 5) !== "image") {
             setMessage("Veuillez télécharger un fichier de type image");
             setOpen(true);
+            return 0;
         }
+        setOpen(false);
         setImage(f);
         const reader = new FileReader();
         reader.onload = () => {
@@ -75,6 +78,8 @@ const ImageInput = (props) => {
             }
         };
         reader.readAsDataURL(f);
+        setAccuracy(null);
+        setResult(null);
     };
     const handleSend = () => {
         //send the image
@@ -87,7 +92,8 @@ const ImageInput = (props) => {
 
         let formdata = new FormData();
         formdata.append("image", image);
-
+        setMessage("Attendez votre image est en cours de traitement");
+        setOpen(true);
         fetch(url, {
             method: "POST",
             body: formdata,
@@ -99,15 +105,15 @@ const ImageInput = (props) => {
                 console.log(data);
                 const pathReference = ref(storage, data.image_path);
                 getDownloadURL(pathReference)
-                    .then((url) => setImgSeg(url))
+                    .then((url) => {
+                        setImgSeg(url);
+                        setOpen(false);
+                    })
                     .catch((e) => console.log(e));
                 setResult(data.test);
                 setAccuracy(data.accuracy);
             })
             .catch((e) => console.log(e));
-
-        setMessage("Votre X-ray a été envoyé avec succès!");
-        setOpen(true);
 
         if (!imgSeg) {
             setImgSeg(false);
@@ -161,7 +167,7 @@ const ImageInput = (props) => {
             </Grid>
             <Snackbar
                 open={open}
-                autoHideDuration={5000}
+                autoHideDuration={6000}
                 onClose={handleClose}
                 message={message}
                 action={action}

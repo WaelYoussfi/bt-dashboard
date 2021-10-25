@@ -1,13 +1,13 @@
 import { Card, CardMedia } from "@mui/material";
 
 const ImageCard = (props) => {
-    // console.log(props.img);
     if (props.img === null) return null;
     return (
         <Card sx={{ minWidth: 345 }}>
             <CardMedia
+                sx={{ objectFit: "fill" }}
                 component="img"
-                // height={props.height}
+                height={250}
                 image={props.img}
                 alt="Choisir une image"
             />
